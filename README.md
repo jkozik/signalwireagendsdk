@@ -152,10 +152,22 @@ To start, at the [Google Cloud Console](https://console.cloud.google.com/apis/da
 <img width="1655" height="827" alt="image" src="https://github.com/user-attachments/assets/db002906-82e5-4de0-8603-c7cdc779c648" />
 Setup a project, I picked "My First Project" -- the default name.  Then I went to the Credentials like on the lefthand side. On the top, click on `+ Create Credentials` and select `API Key`.  
 <img width="1536" height="629" alt="image" src="https://github.com/user-attachments/assets/d2e6b7c4-dd24-4c7a-bea1-3feb6287447c" />
-I created the call, called `API Key` with no restrictions. 
+I created the call, called `API Key` with no restrictions. Set the API key into the .env file as `GOOGLE_SEARCH_API_KEY`
 
 To get a Search Engine ID, go to the [Programmable Search Engine](https://programmablesearchengine.google.com/controlpanel/all) control panel and `Add` 
+<img width="1475" height="921" alt="image" src="https://github.com/user-attachments/assets/374349b7-3eeb-4046-8e9c-44ff5bb4a3d1" />
+I called it `google`.  When created you'll see Search Engine ID.  Set the ID into the .env file as `GOOGLE_SEARCH_ENGINE_ID`
 
+<img width="857" height="741" alt="image" src="https://github.com/user-attachments/assets/f6831bbf-2d34-451b-ba98-28647c086b85" />
+
+## SWML Basic Authentication
+To work with SignalWire Agent SDK, user and a password need to be setup.  By default, the AgentBase class library will generate a default user name of `signalwire` and a > 20 character random password.  Each time, the class initializes, a new password is generated.  This is a pain, because that password needs to be inserted into the URL from SignalWire's   `When a Call Comes in` script parameter.
+
+Therefore, I use the environement variables SWML_BASIC_AUTH_USER and SWML_BASIC_AUTH_PASSWORD in .env.
+
+If the SignalWire provision disagrees with these environment variables, a call to the SignalWire phone number returns "Sorry that number cannot be reached."
 
 ### Reference
 - [Setting up API keys](https://support.google.com/googleapi/answer/6158862?hl=en)
+- [Create a search engine](https://support.google.com/programmable-search/answer/11082370?hl=en&ref_topic=4513742&sjid=14720713324191360097-NC)
+
