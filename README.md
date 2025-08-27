@@ -145,3 +145,17 @@ swaia-google-agent  | INFO:     Uvicorn running on http://0.0.0.0:3000 (Press CT
 Note a couple things:
 - I XXX'd out the secrets.  The AgentBase class shares the keys in the logfile.  If you don't supply them, they will get generated.
 - You'll need to consult the logfile to complete the SignalWire integration
+## Setting up Google API Keys
+To setup the Google keys for Custom Search API access, you need to get a google cloud API Key and a Search Engine Key.  
+
+To start, at the [Google Cloud Console](https://console.cloud.google.com/apis/dashboard?project=vaulted-night-270914).  
+<img width="1655" height="827" alt="image" src="https://github.com/user-attachments/assets/db002906-82e5-4de0-8603-c7cdc779c648" />
+Setup a project, I picked "My First Project" -- the default name.  Then I went to the Credentials like on the lefthand side. On the top, click on `+ Create Credentials` and select `API Key`.  
+<img width="1536" height="629" alt="image" src="https://github.com/user-attachments/assets/d2e6b7c4-dd24-4c7a-bea1-3feb6287447c" />
+I created the call, called `API Key` with no restrictions. 
+
+To get a Search Engine ID, go to the [Programmable Search Engine](https://programmablesearchengine.google.com/controlpanel/all) control panel and `Add` 
+
+
+### Reference
+- [Setting up API keys](https://support.google.com/googleapi/answer/6158862?hl=en)
