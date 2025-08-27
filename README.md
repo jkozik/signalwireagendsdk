@@ -1,4 +1,4 @@
-# Build AI Agent in Python to Google Search, using SignalWire Agents SDK
+# Using SignalWire AI Agent, build IVR that use Google Web Search
 Using the SignalWire SDK, this python script interacts with the SignalWire SWML script mechanism to control an AI-based IVR.  This script was taken from the stand up poster at the conference.  It implements a Google web search.  A basic application, sort of like a Hell World application for SignalWire's Agents SDK.
 
 My first reaction was:  this looks really easy.  I want to give it a try.
@@ -300,5 +300,6 @@ If the SignalWire provision disagrees with these environment variables, a call t
 ### Reference
 - [Setting up API keys](https://support.google.com/googleapi/answer/6158862?hl=en)
 - [Create a search engine](https://support.google.com/programmable-search/answer/11082370?hl=en&ref_topic=4513742&sjid=14720713324191360097-NC)
+
 
 
