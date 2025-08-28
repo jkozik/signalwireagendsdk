@@ -275,13 +275,19 @@ The default setup generated a new Authentication Password.  Leading to the need 
 To setup the Google keys for Custom Search API access, you need to get a google cloud API Key and a Search Engine Key.  
 
 To start, at the [Google Cloud Console](https://console.cloud.google.com/apis/dashboard?project=vaulted-night-270914).  
+
 <img width="1655" height="827" alt="image" src="https://github.com/user-attachments/assets/db002906-82e5-4de0-8603-c7cdc779c648" />
-Setup a project, I picked "My First Project" -- the default name.  Then I went to the Credentials on the lefthand side. On the top, click on `+ Create Credentials` and select `API Key`.  
+
+It will prompt to setup a project, I picked "My First Project" -- the default name.  Then I went to the Credentials on the lefthand side. On the top, click on `+ Create Credentials` and select `API Key`.  
+
 <img width="1536" height="629" alt="image" src="https://github.com/user-attachments/assets/d2e6b7c4-dd24-4c7a-bea1-3feb6287447c" />
+
 I created the key, called `API Key` with no restrictions. Set the API key into the .env file as `GOOGLE_SEARCH_API_KEY`
 
 To get a Search Engine ID, go to the [Programmable Search Engine](https://programmablesearchengine.google.com/controlpanel/all) control panel and `Add` 
+
 <img width="1475" height="921" alt="image" src="https://github.com/user-attachments/assets/374349b7-3eeb-4046-8e9c-44ff5bb4a3d1" />
+
 I called it `google`.  When created you'll see Search Engine ID.  Set the ID into the .env file as `GOOGLE_SEARCH_ENGINE_ID`
 
 <img width="857" height="741" alt="image" src="https://github.com/user-attachments/assets/f6831bbf-2d34-451b-ba98-28647c086b85" />
@@ -296,6 +302,7 @@ If the SignalWire provision disagrees with these environment variables, a call t
 ### Reference
 - [Setting up API keys](https://support.google.com/googleapi/answer/6158862?hl=en)
 - [Create a search engine](https://support.google.com/programmable-search/answer/11082370?hl=en&ref_topic=4513742&sjid=14720713324191360097-NC)
+
 
 
 
