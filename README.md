@@ -1,5 +1,5 @@
-# Using SignalWire AI Agent, build IVR that use Google Web Search
-Using the SignalWire SDK, this python script interacts with the SignalWire SWML script mechanism to control an AI-based IVR.  This script was taken from the stand up poster at the conference.  It implements a Google web search.  A basic application, sort of like a Hell World application for SignalWire's Agents SDK.
+# Using SignalWire AI Agent, build IVR that uses Google Web Search
+Using the [SignalWire SDK](https://developer.signalwire.com/sdks/?https://signalwire.com/c/interactive-voice-response-ivr?utm_source=google&utm_medium=ads&utm_campaign=voice_pmax&utm_content=landing_page&utm_term=&utm_campaign=Performance+Max+-+Voice+API&utm_source=adwords&utm_medium=ppc&hsa_acc=1614938346&hsa_cam=21437034947&hsa_grp=&hsa_ad=&hsa_src=x&hsa_tgt=&hsa_kw=&hsa_mt=&hsa_net=adwords&hsa_ver=3&gad_source=1&gad_campaignid=21512017653&gbraid=0AAAAAC6qrz2z7tRFoqUHLH6K2V2wYd8gv&gclid=CjwKCAjw2brFBhBOEiwAVJX5GGu2GWZAAeVNmp0-VAM2bVj9cHd0m4I7RZlJvSa4nAzYxh22ITnmUxoCHjUQAvD_BwE), this python script interacts with the SignalWire SWML webhook mechanism to control an AI-based IVR.  This script was taken from the stand up poster at the [Cluecon 2025 conference](https://www.cluecon.com/schedule-2025).  It implements a Google web search.  A basic application, sort of like a Hello World application for SignalWire's Agents SDK.
 
 My first reaction was:  this looks really easy.  I want to give it a try.
 
@@ -10,7 +10,7 @@ On the registration table the same Python script was distributed to the conferen
 ![agentssdkcard082725](https://github.com/user-attachments/assets/754eb3b7-b9a0-4626-96d3-63d292a9b7db)
 
 ## Summary
-I did the following setup to get this code running.
+I wrote the code and uploaded it to a repository to document my work.  I did the following setup to get this code running.
 
 - Clone Repository
 - Get GOOGLE API Key and Search Engine ID
@@ -24,7 +24,7 @@ I did the following setup to get this code running.
 - Provision webhook URL above into a SignalWire Phone number's `When a call comes in`
 - Call the phone number and verify interaction
 
-Note: I have a well tested reverse proxy setup that leverages Let's Encrypt for https URLs.  Adding an additional mapping for this service is easy.  To me, much easier than ngrok. 
+Note: I have a well tested reverse proxy that leverages Let's Encrypt for https URLs.  Adding an additional mapping for this service is easy.  To me, much easier than ngrok. 
 
 ## dev-agent.py
 On my home server, I setup a project and created the file dev-agent.py
@@ -76,14 +76,10 @@ My docker file is really simple:
 ```
 (.venv) jkozik@u2004:~/projects/swaia-google$ cat Dockerfile
 FROM python:3.11-slim
-
 WORKDIR /app
-
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
-
 COPY . .
-
 EXPOSE 3000
 
 (.venv) jkozik@u2004:~/projects/swaia-google$ docker images
@@ -166,7 +162,7 @@ Note a couple things:
 ## Verify dev-agent.py 
 First, verify that port 3000 can be accessed from the home LAN.  
 ```
-(.venv) jkozik@u2004:~/projects/swaia-google$ curl http://jkozik:bbVOlu80VNfIG-ydx4B-sYBW-x4wA7JuPvATbd6eHHU@192.168.100.128:3000 | jq
+(.venv) jkozik@u2004:~/projects/swaia-google$ curl http://jkozik:XXXXXXXXXXXXXXXX@192.168.100.128:3000 | jq
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
 100  1638  100  1638    0     0  17968      0 --:--:-- --:--:-- --:--:-- 18200
@@ -266,7 +262,7 @@ This worked, but I didn't pretty print it.
 The URL used in the above test needs to be provisioned into the SignalWire `Phone Number` -> `Handle Calls Using` as `a SWML Script`.  The URL needs to be inserted into the `When a call comes in` field. 
 <img width="1630" height="766" alt="image" src="https://github.com/user-attachments/assets/5f4d21dd-f706-4cfc-911f-f186a9b5fd05" />
 
-Save the changes and call the phone number.  It is interesting to look at the log file for the docker file.  You'll see a web hook call per interaction with the service.  
+Save the changes and call the phone number.  It is interesting to look at the docker log file.  You'll see a web hook call per interaction with the service.  
 
 ## Summary
 
@@ -280,9 +276,9 @@ To setup the Google keys for Custom Search API access, you need to get a google 
 
 To start, at the [Google Cloud Console](https://console.cloud.google.com/apis/dashboard?project=vaulted-night-270914).  
 <img width="1655" height="827" alt="image" src="https://github.com/user-attachments/assets/db002906-82e5-4de0-8603-c7cdc779c648" />
-Setup a project, I picked "My First Project" -- the default name.  Then I went to the Credentials like on the lefthand side. On the top, click on `+ Create Credentials` and select `API Key`.  
+Setup a project, I picked "My First Project" -- the default name.  Then I went to the Credentials on the lefthand side. On the top, click on `+ Create Credentials` and select `API Key`.  
 <img width="1536" height="629" alt="image" src="https://github.com/user-attachments/assets/d2e6b7c4-dd24-4c7a-bea1-3feb6287447c" />
-I created the call, called `API Key` with no restrictions. Set the API key into the .env file as `GOOGLE_SEARCH_API_KEY`
+I created the key, called `API Key` with no restrictions. Set the API key into the .env file as `GOOGLE_SEARCH_API_KEY`
 
 To get a Search Engine ID, go to the [Programmable Search Engine](https://programmablesearchengine.google.com/controlpanel/all) control panel and `Add` 
 <img width="1475" height="921" alt="image" src="https://github.com/user-attachments/assets/374349b7-3eeb-4046-8e9c-44ff5bb4a3d1" />
@@ -300,6 +296,7 @@ If the SignalWire provision disagrees with these environment variables, a call t
 ### Reference
 - [Setting up API keys](https://support.google.com/googleapi/answer/6158862?hl=en)
 - [Create a search engine](https://support.google.com/programmable-search/answer/11082370?hl=en&ref_topic=4513742&sjid=14720713324191360097-NC)
+
 
 
 
