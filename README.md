@@ -24,6 +24,13 @@ I wrote the code and uploaded it to a repository to document my work.  I did the
 
 Note: I have a well tested reverse proxy that leverages Let's Encrypt for https URLs.  Adding an additional mapping for this service is easy.  To me, much easier than ngrok. 
 
+# My setup
+To run this script, I put it on my home server in a Docker container.  I have a reverse proxy that manages a LetEncrypt based reverse proxy, letting me dedicate a subdomain for linkage between the script and SignalWire.  
+
+Here's a picture of my setup.
+
+<img width="1289" height="729" alt="image" src="https://github.com/user-attachments/assets/2e909739-2de3-4ace-aed2-9e2544ed46b8" />
+
 ## dev-agent.py
 On my home server, I setup a project and created the file dev-agent.py
 ```
@@ -61,16 +68,11 @@ Note a few things:
 - I put the SWML authenication, GOOGLE API key and id in a .env file.  See end of README for more details.
 - As part of my getting started setup, I created a virtual environment (venv).  Setup not shown
 
-## My setup
-To run this script, I put it on my home server in a Docker container.  I have a reverse proxy that manages a LetEncrypt based reverse proxy, letting me dedicate a subdomain for linkage between the script and SignalWire.  
 
-Here's a picture of my setup.
-
-<img width="1289" height="729" alt="image" src="https://github.com/user-attachments/assets/2e909739-2de3-4ace-aed2-9e2544ed46b8" />
 
 ## Docker setup
-As a personal preferene, I like putting scripts like this, that is ones that run as an API with a REST interface on a dedicated port, I like putting them into docker containers.  It makes it easier for me to share with others and re-create if I ever want to run them again.
-My docker file is really simple:
+As a personal preference, I like putting scripts like this into docker containers.  It makes it easier for me to share with others and re-create if I ever want to run them again.
+My `Dockerfile` file is really simple:
 ```
 (.venv) jkozik@u2004:~/projects/swaia-google$ cat Dockerfile
 FROM python:3.11-slim
@@ -84,7 +86,7 @@ EXPOSE 3000
 REPOSITORY                                                                                              TAG       IMAGE ID       CREATED         SIZE
 swaia-google-dev-agent                                                                                  latest    1587f1f0049e   24 hours ago    235MB
 ```
-My docker-compose.yml file has some important things:
+My `docker-compose.yml` file has some important things:
 ```
 (.venv) jkozik@u2004:~/projects/swaia-google$ cat docker-compose.yml
 version: '3.8'
@@ -247,7 +249,7 @@ Note a few things:
 - the URL includes a user, a password and points to port 3000
 - Piping the output through jq, one can see that this agent is web hook and is feeding prompt information to SignalWire.
 
-Also, verify from an external network.  This should return the same thing, but over https through my reverse proxy.
+Also, verify from an external network. From a host outside of the home LAN, verify that the https:// version of the URL works.  This verifies both the Let's Encrypt TLS processing and the reverse proxy URL to port mappying. 
 ```
 (.venv) jkozik@u2004:~/projects/swaia-google$ curl https://jkozik:bbVOlu80VNfIG-ydx4B-sYBW-x4wA7JuPvATbd6eHHU@swaig.kozik.net
 {"version": "1.0.0", "sections": {"main": [{"answer": {}}, {"ai": {"prompt": {"pom": [{"body": "you are Franklin, the web search bot.", "title": "role"}, {"bullets": ["Ask the user what they want to search for on the web"], "title": "instructions"}, {"body": "You can search the internet for current, accurate information on any topic using the web_search tool.", "bullets": ["Use the web_search tool when users ask for information you need to look up", "Search for news, current events, product information, or any current data", "Summarize search results in a clear, helpful way", "Include relevant URLs so users can read more if interested"], "title": "Web Search Capability"}], "temperature": 0.3, "top_p": 1.0, "barge_confidence": 0.0, "presence_penalty": 0.1, "frequency_penalty": 0.1}, "SWAIG": {"functions": [{"function": "web_search", "description": "Search the web for information on any topic and return detailed results with content from multiple sources", "parameters": {"type": "object", "properties": {"query": {"type": "string", "description": "The search query - what you want to find information about"}}}, "web_hook_url": "http://jkozik:bbVOlu80VNfIG-ydx4B-sYBW-x4wA7JuPvATbd6eHHU@swaig.kozik.net/swaig/?__token=T25oWW9FcEpkRWItRVdmbnViNjE4dy53ZWJfc2VhcmNoLjE3NTYzNDAyOTYuMGExODExZWMuYjg4NDY2Y2FkZjY1ZjQ3Mw=="}], "defaults": {"web_hook_url": "http://jkozik:bbVOlu80VNfIG-ydx4B-sYBW-x4wA7JuPvATbd6eHHU@swaig.kozik.net/swaig/"}}, "params": {}, "languages": [{"name": "English", "code": "en-US", "voice": "rime.spore"}], "global_data": {"web_search_enabled": true, "search_provider": "Google Custom Search"}}}]}}
@@ -300,6 +302,7 @@ If the SignalWire provision disagrees with these environment variables, a call t
 ### Reference
 - [Setting up API keys](https://support.google.com/googleapi/answer/6158862?hl=en)
 - [Create a search engine](https://support.google.com/programmable-search/answer/11082370?hl=en&ref_topic=4513742&sjid=14720713324191360097-NC)
+
 
 
 
