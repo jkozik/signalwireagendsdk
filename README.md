@@ -1,5 +1,5 @@
 # Using SignalWire AI Agent, build IVR that uses Google Web Search
-At [Cluecon 2025 conference](https://www.cluecon.com/schedule-2025), the SignalWire team was introducing their new [Agents SDK](https://developer.signalwire.com/sdks/agents-sdk/). This is a Python environment for an AI-based IVR. On a poster at the conference was an example use case of a web search bot.  I implemented it, and saved the code in this repository.   
+At [Cluecon 2025 conference](https://www.cluecon.com/schedule-2025), the SignalWire team was introducing their new [AI Agents SDK](https://developer.signalwire.com/sdks/agents-sdk/). This is a Python environment for an AI-based IVR. On a poster at the conference was an example use case of a web search bot.  I implemented it, and saved the code in this repository.   
 
 ![IMG_8117](https://github.com/user-attachments/assets/c57bf083-bba7-4c9c-be1e-b7d90e3bfbbb)
 
@@ -158,6 +158,7 @@ swaia-google-agent  | INFO:     Uvicorn running on http://0.0.0.0:3000 (Press CT
 Note a couple things:
 - I XXX'd out the secrets.  The AgentBase class shares the keys in the logfile.  If you don't supply them, they will get generated.
 - You'll need to consult the logfile to complete the SignalWire integration
+- From the logfile, one can see that agent_base runs on port 3000 of a FastAPI-based web service.  
 
 ## Verify dev-agent.py 
 First, verify that port 3000 can be accessed from the home LAN.  
@@ -266,7 +267,7 @@ Save the changes and call the phone number.  It is interesting to look at the do
 
 ## Summary
 
-This is the ideal "Hello World" example script to help me learn this API.  For me, the next step is to study some of the [Agent API Examples](https://github.com/signalwire/signalwire-agents/blob/main/examples/README.md)
+This is the ideal "Hello World" example script to help me learn this SignalWire AI Agent SDK.  For me, the next step is to study some of the [Agent API Examples](https://github.com/signalwire/signalwire-agents/blob/main/examples/README.md)
 
 The default setup generated a new Authentication Password, leading to the need to update the SignalWire provisioning after every code change.  My .env setup makes tinkering much easier to do. 
 
@@ -293,7 +294,7 @@ I called it `google`.  When created you'll see Search Engine ID.  Set the ID int
 <img width="857" height="741" alt="image" src="https://github.com/user-attachments/assets/f6831bbf-2d34-451b-ba98-28647c086b85" />
 
 ## SWML Basic Authentication
-To work with SignalWire Agent SDK, user and a password need to be setup.  By default, the AgentBase class library will generate a default user name of `signalwire` and a > 20 character random password.  Each time, the class initializes, a new password is generated.  This is a pain, because that password needs to be inserted into the URL from SignalWire's   `When a Call Comes in` script parameter.
+To work with SignalWire AI Agent SDK, user and a password need to be setup.  By default, the AgentBase class library will generate a default user name of `signalwire` and a > 20 character random password.  Each time, the class initializes, a new password is generated.  This is a pain, because that password needs to be inserted into the URL from SignalWire's   `When a Call Comes in` script parameter.
 
 Therefore, I use the environement variables SWML_BASIC_AUTH_USER and SWML_BASIC_AUTH_PASSWORD in .env.
 
@@ -304,6 +305,7 @@ If the SignalWire provision disagrees with these environment variables, a call t
 - [Create a search engine](https://support.google.com/programmable-search/answer/11082370?hl=en&ref_topic=4513742&sjid=14720713324191360097-NC)
 - [SignalWire Agents SDK](https://developer.signalwire.com/sdks/agents-sdk/)
 - [SignalWire AI Agent SDK Examples](https://github.com/signalwire/signalwire-agents/blob/main/examples/README.md)
+
 
 
 
