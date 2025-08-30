@@ -1,31 +1,32 @@
 # Using SignalWire AI Agent, build IVR that uses Google Web Search
-At [Cluecon 2025 conference](https://www.cluecon.com/schedule-2025), the SignalWire team was introducing their new [AI Agents SDK](https://developer.signalwire.com/sdks/agents-sdk/). This is a Python environment for an AI-based IVR. On a poster at the conference was an example use case of a web search bot.  I implemented it, and saved the code in this repository.   
+At [Cluecon 2025 conference](https://www.cluecon.com/schedule-2025), the SignalWire team was introducing their new [AI Agents SDK](https://developer.signalwire.com/sdks/agents-sdk/). This is a Python environment for an AI-based IVR. On a poster at the conference there was an example use case of a web search bot.  I implemented it, and saved the code in this repository.   
 
-![IMG_8117](https://github.com/user-attachments/assets/c57bf083-bba7-4c9c-be1e-b7d90e3bfbbb)
+<img width="400" height="600" alt="image" src="https://github.com/user-attachments/assets/c57bf083-bba7-4c9c-be1e-b7d90e3bfbbb" />
 
 On the registration table the same Python script was distributed to the conference on little index cards.
 
-![agentssdkcard082725](https://github.com/user-attachments/assets/754eb3b7-b9a0-4626-96d3-63d292a9b7db)
+
+<img width="400" height="600" alt="image" src="https://github.com/user-attachments/assets/754eb3b7-b9a0-4626-96d3-63d292a9b7db" />
 
 ## Summary
-I wrote the code and uploaded it to a repository to document my work.  I did the following steps to get this code running.
+For my reference and perhaps the benefit of others, I recorded the steps I followed to get this work.  Here's a summary.  The following sections give lots of details.  
 
 - Clone Repository
 - Get GOOGLE API Key and Search Engine ID
 - Setup .env with key, ID and SignalWire Auth data
-- Building and run dev-agent.py using docker compose build, then up -d
+- On server 192.168.100.128, build and run `dev-agent.py` using docker compose build, then up -d
 - verify log files ok
 - setup firewall to route port 3000 to reverse proxy
-- setup reverse proxy to map https://*.swaig.kozik.net -> http://192.168.100.128:3000
-- Verify webhook URL  http://jkozik:XXXXXX:3000
-- Verify webhook URL https://jkozik:XXXXXXXX@swaig.kozik.net
-- Provision webhook URL above into a SignalWire Phone number's `When a call comes in`
+- setup reverse proxy to map URL https://*.swaig.kozik.net -> http://192.168.100.128:3000
+- Verify URL  http://jkozik:XXXXXX:3000
+- Verify  URL https://jkozik:XXXXXXXX@swaig.kozik.net
+- Provision  URL above into a SignalWire Phone number's `When a call comes in`
 - Call the phone number and verify interaction
 
 Note: I have a well tested reverse proxy that leverages Let's Encrypt for https URLs.  Adding an additional mapping for this service is easy.  To me, much easier than ngrok. 
 
-# My setup
-To run this script, I put it on my home server in a Docker container.  I have a reverse proxy that manages a LetEncrypt based reverse proxy, letting me dedicate a subdomain for linkage between the script and SignalWire.  
+# My setup -- Picture plus steps followed
+To run this script, I put it on my home server in a Docker container.  My home network has a reverse proxy that manages incoming https:// URLs, mapping specific URLs to internal servers/ports. This lets me dedicate a subdomain https://swaig.xxxxxx.net for linkage between the script and SignalWire.  
 
 Here's a picture of my setup.
 
@@ -65,14 +66,13 @@ if __name__ == "__main__":
 (.venv) jkozik@u2004:~/projects/swaia-google$
 ```
 Note a few things:
-- I put the SWML authenication, GOOGLE API key and id in a .env file.  See end of README for more details.
-- As part of my getting started setup, I created a virtual environment (venv).  Setup not shown
-
+- The default setup generated a new Authentication Password, leading to the need to update the SignalWire provisioning after every code change.  My .env setup makes tinkering much easier to do. I put the SWML authenication, GOOGLE API key and id in a .env file.  See end of README for more details.
+- I setup a venv and ran this program from the command line.  It is good for initial setup, I prefer things in Docker containers
 
 
 ## Docker setup
-As a personal preference, I like putting scripts like this into docker containers.  It makes it easier for me to share with others and re-create if I ever want to run them again.
-My `Dockerfile` file is really simple:
+In Docker containers, I find that it makes it easier for me to share with others and re-create if I ever want to run them again.
+My `Dockerfile` file is really simple.
 ```
 (.venv) jkozik@u2004:~/projects/swaia-google$ cat Dockerfile
 FROM python:3.11-slim
@@ -86,6 +86,8 @@ EXPOSE 3000
 REPOSITORY                                                                                              TAG       IMAGE ID       CREATED         SIZE
 swaia-google-dev-agent                                                                                  latest    1587f1f0049e   24 hours ago    235MB
 ```
+An image size of 235MB is not bad.
+
 My `docker-compose.yml` file has some important things:
 ```
 (.venv) jkozik@u2004:~/projects/swaia-google$ cat docker-compose.yml
@@ -108,7 +110,7 @@ services:
     tty: true
     restart: unless-stopped(
 ```
-I have GOOGLE and SignalWire Markup environment variables.  I have a .env file with the secrets.  The script will not work without these.
+I have GOOGLE and SignalWire Markup environment variables held in a .env file.  The script will not work without these correctly provisioned.  See sections below for instructions for setting these variables. 
 
 ## docker-compose.yml
 The build is very straight forward:
@@ -157,11 +159,11 @@ swaia-google-agent  | INFO:     Uvicorn running on http://0.0.0.0:3000 (Press CT
 ```
 Note a couple things:
 - I XXX'd out the secrets.  The AgentBase class shares the keys in the logfile.  If you don't supply them, they will get generated.
-- You'll need to consult the logfile to complete the SignalWire integration
+- If you don't supply the SignalWire authentication variables, consult the logfile to see what AgentBase generated. 
 - From the logfile, one can see that agent_base runs on port 3000 of a FastAPI-based web service.  
 
 ## Verify dev-agent.py 
-First, verify that port 3000 can be accessed from the home LAN.  
+From a terminal on the Home LAN, run the command below to verify that port 3000 can be accessed. 
 ```
 (.venv) jkozik@u2004:~/projects/swaia-google$ curl http://jkozik:XXXXXXXXXXXXXXXX@192.168.100.128:3000 | jq
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
@@ -250,7 +252,7 @@ Note a few things:
 - the URL includes a user, a password and points to port 3000
 - Piping the output through jq, one can see that this agent is web hook and is feeding prompt information to SignalWire.
 
-Also, verify from an external network. From a host outside of the home LAN, verify that the https:// version of the URL works.  This verifies both the Let's Encrypt TLS processing and the reverse proxy URL to port mappying. 
+From a terminal window running on a host outside of the home LAN, verify that the https:// version of the URL works.  This verifies both the Let's Encrypt TLS processing and the reverse proxy URL to port mapping. 
 ```
 (.venv) jkozik@u2004:~/projects/swaia-google$ curl https://jkozik:bbVOlu80VNfIG-ydx4B-sYBW-x4wA7JuPvATbd6eHHU@swaig.kozik.net
 {"version": "1.0.0", "sections": {"main": [{"answer": {}}, {"ai": {"prompt": {"pom": [{"body": "you are Franklin, the web search bot.", "title": "role"}, {"bullets": ["Ask the user what they want to search for on the web"], "title": "instructions"}, {"body": "You can search the internet for current, accurate information on any topic using the web_search tool.", "bullets": ["Use the web_search tool when users ask for information you need to look up", "Search for news, current events, product information, or any current data", "Summarize search results in a clear, helpful way", "Include relevant URLs so users can read more if interested"], "title": "Web Search Capability"}], "temperature": 0.3, "top_p": 1.0, "barge_confidence": 0.0, "presence_penalty": 0.1, "frequency_penalty": 0.1}, "SWAIG": {"functions": [{"function": "web_search", "description": "Search the web for information on any topic and return detailed results with content from multiple sources", "parameters": {"type": "object", "properties": {"query": {"type": "string", "description": "The search query - what you want to find information about"}}}, "web_hook_url": "http://jkozik:bbVOlu80VNfIG-ydx4B-sYBW-x4wA7JuPvATbd6eHHU@swaig.kozik.net/swaig/?__token=T25oWW9FcEpkRWItRVdmbnViNjE4dy53ZWJfc2VhcmNoLjE3NTYzNDAyOTYuMGExODExZWMuYjg4NDY2Y2FkZjY1ZjQ3Mw=="}], "defaults": {"web_hook_url": "http://jkozik:bbVOlu80VNfIG-ydx4B-sYBW-x4wA7JuPvATbd6eHHU@swaig.kozik.net/swaig/"}}, "params": {}, "languages": [{"name": "English", "code": "en-US", "voice": "rime.spore"}], "global_data": {"web_search_enabled": true, "search_provider": "Google Custom Search"}}}]}}
@@ -260,16 +262,16 @@ Also, verify from an external network. From a host outside of the home LAN, veri
 This worked, but I didn't pretty print it. 
 
 ## Provision the URL into SignalWire
-The URL used in the above test needs to be provisioned into the SignalWire `Phone Number` -> `Handle Calls Using` as `a SWML Script`.  The URL needs to be inserted into the `When a call comes in` field. 
+The URL used in the above test needs to be provisioned into the SignalWire.  From the dashboard, select on the left hand column:  `Phone Number` -> `Handle Calls Using` as `a SWML Script`.  The URL needs to be inserted into the `When a call comes in` field. I used an existing phone number.  You may need to buy your own if you don't already have one. 
 <img width="1630" height="766" alt="image" src="https://github.com/user-attachments/assets/5f4d21dd-f706-4cfc-911f-f186a9b5fd05" />
 
 Save the changes and call the phone number.  It is interesting to look at the docker log file.  You'll see a web hook call per interaction with the service.  
 
 ## Summary
 
-This is the ideal "Hello World" example script to help me learn this SignalWire AI Agent SDK.  For me, the next step is to study some of the [Agent API Examples](https://github.com/signalwire/signalwire-agents/blob/main/examples/README.md)
+This is a really good "Hello World" example script to help me learn the SignalWire AI Agent SDK.  For me, the next step is to study some of the [Agent API Examples](https://github.com/signalwire/signalwire-agents/blob/main/examples/README.md)
 
-The default setup generated a new Authentication Password, leading to the need to update the SignalWire provisioning after every code change.  My .env setup makes tinkering much easier to do. 
+
 
 
 # Setting up Google API Keys
@@ -298,13 +300,15 @@ To work with SignalWire AI Agent SDK, user and a password need to be setup.  By 
 
 Therefore, I use the environement variables SWML_BASIC_AUTH_USER and SWML_BASIC_AUTH_PASSWORD in .env.
 
-If the SignalWire provision disagrees with these environment variables, a call to the SignalWire phone number returns "Sorry that number cannot be reached."
+If the SignalWire provisioning disagrees with these environment variables, a call to the SignalWire phone number returns "Sorry that number cannot be reached."
 
 ### Reference
 - [Setting up API keys](https://support.google.com/googleapi/answer/6158862?hl=en)
 - [Create a search engine](https://support.google.com/programmable-search/answer/11082370?hl=en&ref_topic=4513742&sjid=14720713324191360097-NC)
 - [SignalWire Agents SDK](https://developer.signalwire.com/sdks/agents-sdk/)
 - [SignalWire AI Agent SDK Examples](https://github.com/signalwire/signalwire-agents/blob/main/examples/README.md)
+- [Your AI Agent Deserves More Than a Webhook](https://share.signalwire.com/a-full-ai-framework-for-voice-not-just-a-prompt-playground?ecid=ACsprvtll5GcOXPzhhgJX4T1y7E2wq2hs4tSkUFYZ8irgLpBSA9VgwEOKWPk7pbgzfkh6AC85ADf&utm_campaign=17777493-Agent%20SDK%20Series%20Launch&utm_medium=email&_hsenc=p2ANqtz--JOx3ywMr5DfGFy4eWpFwP8mrVWTnXB-Oip9bF1zaCMxsVsenvvgCCETYn2lgeaI4QFv4D1LHUevZJFM0a8g-uMUEchA&_hsmi=377993165&utm_content=377993165&utm_source=hs_email)
+
 
 
 
