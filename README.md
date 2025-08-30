@@ -8,7 +8,7 @@ On the registration table the same Python script was distributed to the conferen
 ![agentssdkcard082725](https://github.com/user-attachments/assets/754eb3b7-b9a0-4626-96d3-63d292a9b7db)
 
 ## Summary
-I wrote the code and uploaded it to a repository to document my work.  I did the following setup to get this code running.
+I wrote the code and uploaded it to a repository to document my work.  I did the following steps to get this code running.
 
 - Clone Repository
 - Get GOOGLE API Key and Search Engine ID
@@ -300,6 +300,7 @@ If the SignalWire provision disagrees with these environment variables, a call t
 ### Reference
 - [Setting up API keys](https://support.google.com/googleapi/answer/6158862?hl=en)
 - [Create a search engine](https://support.google.com/programmable-search/answer/11082370?hl=en&ref_topic=4513742&sjid=14720713324191360097-NC)
+
 
 
 
