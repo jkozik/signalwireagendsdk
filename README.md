@@ -1,10 +1,5 @@
 # Using SignalWire AI Agent, build IVR that uses Google Web Search
-At Cluecon 2025, the SignalWire team was introducing their new Agents SDK. This is a Python environment for an AI-based IVR. On a poster at the conference was an example use case of a web search bot.  The poster had some code on it; I implemented it and saved the code in this repository.   
-
-## Background
-Using the [SignalWire SDK](https://developer.signalwire.com/sdks/?https://signalwire.com/c/interactive-voice-response-ivr?utm_source=google&utm_medium=ads&utm_campaign=voice_pmax&utm_content=landing_page&utm_term=&utm_campaign=Performance+Max+-+Voice+API&utm_source=adwords&utm_medium=ppc&hsa_acc=1614938346&hsa_cam=21437034947&hsa_grp=&hsa_ad=&hsa_src=x&hsa_tgt=&hsa_kw=&hsa_mt=&hsa_net=adwords&hsa_ver=3&gad_source=1&gad_campaignid=21512017653&gbraid=0AAAAAC6qrz2z7tRFoqUHLH6K2V2wYd8gv&gclid=CjwKCAjw2brFBhBOEiwAVJX5GGu2GWZAAeVNmp0-VAM2bVj9cHd0m4I7RZlJvSa4nAzYxh22ITnmUxoCHjUQAvD_BwE), this python script interacts with the SignalWire SWML webhook mechanism to control an AI-based IVR.  This script was taken from the stand up poster at the [Cluecon 2025 conference](https://www.cluecon.com/schedule-2025).  It implements a Google web search.  A basic application, sort of like a Hello World application for [SignalWire's Agents SDK](https://developer.signalwire.com/sdks/agents-sdk/).
-
-My first reaction was:  this looks really easy.  I want to give it a try.
+At [Cluecon 2025 conference](https://www.cluecon.com/schedule-2025), the SignalWire team was introducing their new [Agents SDK](https://developer.signalwire.com/sdks/agents-sdk/). This is a Python environment for an AI-based IVR. On a poster at the conference was an example use case of a web search bot.  The poster had some code on it; I implemented it and saved the code in this repository.   
 
 ![IMG_8117](https://github.com/user-attachments/assets/c57bf083-bba7-4c9c-be1e-b7d90e3bfbbb)
 
@@ -305,6 +300,7 @@ If the SignalWire provision disagrees with these environment variables, a call t
 ### Reference
 - [Setting up API keys](https://support.google.com/googleapi/answer/6158862?hl=en)
 - [Create a search engine](https://support.google.com/programmable-search/answer/11082370?hl=en&ref_topic=4513742&sjid=14720713324191360097-NC)
+
 
 
 
