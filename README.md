@@ -266,9 +266,9 @@ Save the changes and call the phone number.  It is interesting to look at the do
 
 ## Summary
 
-I found this easy to setup.  SignalWire is doing the integration between the LLM and the IVR system. From this basic Python script one can expand to a whole series of IVR services, assisted by an LLM using data from a wide range of API-based tools.  
+This is the ideal "Hello World" example script to help me learn this API.  For me, the next step is to study some of the [Agent API Examples](https://github.com/signalwire/signalwire-agents/blob/main/examples/README.md)
 
-The default setup generated a new Authentication Password.  Leading to the need to update the SignalWire provisioning after every code change.  My .env setup makes tinkering much easier to do. 
+The default setup generated a new Authentication Password, leading to the need to update the SignalWire provisioning after every code change.  My .env setup makes tinkering much easier to do. 
 
 
 # Setting up Google API Keys
@@ -302,6 +302,9 @@ If the SignalWire provision disagrees with these environment variables, a call t
 ### Reference
 - [Setting up API keys](https://support.google.com/googleapi/answer/6158862?hl=en)
 - [Create a search engine](https://support.google.com/programmable-search/answer/11082370?hl=en&ref_topic=4513742&sjid=14720713324191360097-NC)
+- [SignalWire Agents SDK](https://developer.signalwire.com/sdks/agents-sdk/)
+- [SignalWire AI Agent SDK Examples](https://github.com/signalwire/signalwire-agents/blob/main/examples/README.md)
+
 
 
 
