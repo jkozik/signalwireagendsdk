@@ -25,7 +25,7 @@ For my reference and perhaps the benefit of others, I recorded the steps I follo
 - Provision URL above into a SignalWire Phone number's `When a call comes in`
 - Call the phone number and verify interaction
 
-Note: I have a well tested reverse proxy that leverages Let's Encrypt for https URLs.  Adding an additional mapping for this service is easy.  To me, much easier than `ngrok`. 
+Note: I have a reverse proxy on my home LAN that leverages Let's Encrypt for https URLs.  Adding an additional mapping for this service is easy.  To me, much easier than `ngrok`. 
 
 # My setup -- A picture plus the steps I followed
 To run this script, I put it on my home server in a Docker container.  My home network has a reverse proxy that manages incoming https:// URLs, mapping specific URLs to internal servers/ports. This lets me dedicate the subdomain https://swaig.xxxxxx.net for linkage between the script and SignalWire.  
@@ -315,6 +315,7 @@ If the SignalWire provisioning disagrees with these environment variables, a cal
 - [SignalWire Agents SDK](https://developer.signalwire.com/sdks/agents-sdk/)
 - [SignalWire AI Agent SDK Examples](https://github.com/signalwire/signalwire-agents/blob/main/examples/README.md)
 - [Your AI Agent Deserves More Than a Webhook](https://share.signalwire.com/a-full-ai-framework-for-voice-not-just-a-prompt-playground?ecid=ACsprvtll5GcOXPzhhgJX4T1y7E2wq2hs4tSkUFYZ8irgLpBSA9VgwEOKWPk7pbgzfkh6AC85ADf&utm_campaign=17777493-Agent%20SDK%20Series%20Launch&utm_medium=email&_hsenc=p2ANqtz--JOx3ywMr5DfGFy4eWpFwP8mrVWTnXB-Oip9bF1zaCMxsVsenvvgCCETYn2lgeaI4QFv4D1LHUevZJFM0a8g-uMUEchA&_hsmi=377993165&utm_content=377993165&utm_source=hs_email)
+
 
 
 
