@@ -35,7 +35,7 @@ Here's a picture of my setup.
 
 ## dev-agent.py
 On my home server, I setup a project and created the file dev-agent.py
-```
+```python
 (.venv) jkozik@u2004:~/projects/swaia-google$ cat dev-agent.py
 import os
 from dotenv import load_dotenv, find_dotenv
@@ -74,7 +74,7 @@ Note a few things:
 ## Docker setup
 In Docker containers, I find that it makes it easier for me to share with others and re-create if I ever want to run them again.
 My `Dockerfile` file is really simple.
-```
+```dockerfile
 (.venv) jkozik@u2004:~/projects/swaia-google$ cat Dockerfile
 FROM python:3.11-slim
 WORKDIR /app
@@ -90,7 +90,7 @@ swaia-google-dev-agent                                                          
 An image size of 235MB is not bad.
 
 My `docker-compose.yml` file has some important things:
-```
+```yaml
 (.venv) jkozik@u2004:~/projects/swaia-google$ cat docker-compose.yml
 version: '3.8'
 
@@ -115,7 +115,7 @@ I have GOOGLE and SignalWire Markup environment variables held in a .env file.  
 
 ## docker-compose.yml
 The build is very straight forward:
-```
+```shell
 (.venv) jkozik@u2004:~/projects/swaia-google$ docker compose build --no-cache
 [+] Building 27.7s (11/11) FINISHED                                                                                                                                docker:default
  => [dev-agent internal] load build definition from Dockerfile                                                                                                               0.0s
@@ -138,7 +138,7 @@ The build is very straight forward:
 (.venv) jkozik@u2004:~/projects/swaia-google$
 ```
 Once the image it built, run it.
-```
+```shell
 (.venv) jkozik@u2004:~/projects/swaia-google$ docker compose up -d
 [+] Running 1/1
  ✔ Container swaia-google-agent  Started                                                                                                                                     0.7s
@@ -165,11 +165,13 @@ Note a couple things:
 
 ## Verify dev-agent.py 
 From a terminal on the Home LAN, run the command below to verify that port 3000 can be accessed. 
-```
+```shell
 (.venv) jkozik@u2004:~/projects/swaia-google$ curl http://jkozik:XXXXXXXXXXXXXXXX@192.168.100.128:3000 | jq
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
 100  1638  100  1638    0     0  17968      0 --:--:-- --:--:-- --:--:-- 18200
+```
+```json
 {
   "version": "1.0.0",
   "sections": {
@@ -246,8 +248,6 @@ From a terminal on the Home LAN, run the command below to verify that port 3000 
     ]
   }
 }
-(.venv) jkozik@u2004:~/projects/swaia-google$
-
 ```
 Note a few things:
 - the URL includes a user, a password and points to port 3000
@@ -256,9 +256,10 @@ Note a few things:
 From a terminal window running on a host outside of the home LAN, verify that the https:// version of the URL works.  This verifies both the Let's Encrypt TLS processing and the reverse proxy URL to port mapping. 
 ```
 (.venv) jkozik@u2004:~/projects/swaia-google$ curl https://jkozik:bbVOlu80VNfIG-ydx4B-sYBW-x4wA7JuPvATbd6eHHU@swaig.kozik.net
+```
+```json
 {"version": "1.0.0", "sections": {"main": [{"answer": {}}, {"ai": {"prompt": {"pom": [{"body": "you are Franklin, the web search bot.", "title": "role"}, {"bullets": ["Ask the user what they want to search for on the web"], "title": "instructions"}, {"body": "You can search the internet for current, accurate information on any topic using the web_search tool.", "bullets": ["Use the web_search tool when users ask for information you need to look up", "Search for news, current events, product information, or any current data", "Summarize search results in a clear, helpful way", "Include relevant URLs so users can read more if interested"], "title": "Web Search Capability"}], "temperature": 0.3, "top_p": 1.0, "barge_confidence": 0.0, "presence_penalty": 0.1, "frequency_penalty": 0.1}, "SWAIG": {"functions": [{"function": "web_search", "description": "Search the web for information on any topic and return detailed results with content from multiple sources", "parameters": {"type": "object", "properties": {"query": {"type": "string", "description": "The search query - what you want to find information about"}}}, "web_hook_url": "http://jkozik:bbVOlu80VNfIG-ydx4B-sYBW-x4wA7JuPvATbd6eHHU@swaig.kozik.net/swaig/?__token=T25oWW9FcEpkRWItRVdmbnViNjE4dy53ZWJfc2VhcmNoLjE3NTYzNDAyOTYuMGExODExZWMuYjg4NDY2Y2FkZjY1ZjQ3Mw=="}], "defaults": {"web_hook_url": "http://jkozik:bbVOlu80VNfIG-ydx4B-sYBW-x4wA7JuPvATbd6eHHU@swaig.kozik.net/swaig/"}}, "params": {}, "languages": [{"name": "English", "code": "en-US", "voice": "rime.spore"}], "global_data": {"web_search_enabled": true, "search_provider": "Google Custom Search"}}}]}}
 
-(.venv) jkozik@u2004:~/projects/swaia-google$
 ```
 This worked, but I didn't pretty print it. 
 
@@ -299,16 +300,17 @@ I called it `google`.  When created you'll see Search Engine ID.  Set the ID int
 ## SWML Basic Authentication
 To work with SignalWire AI Agent SDK, user and a password need to be setup.  By default, the AgentBase class library will generate a default user name of `signalwire` and a > 20 character random password.  Each time, the class initializes, a new password is generated.  This is a pain, because that password needs to be inserted into the URL from SignalWire's   `When a Call Comes in` script parameter.
 
-Therefore, I use the environement variables SWML_BASIC_AUTH_USER and SWML_BASIC_AUTH_PASSWORD in .env.
+Therefore, I use the environement variables `SWML_BASIC_AUTH_USER` and `SWML_BASIC_AUTH_PASSWORD` in .env.
 
 If the SignalWire provisioning disagrees with these environment variables, a call to the SignalWire phone number returns "Sorry that number cannot be reached."
 
-### Reference
+# References
 - [Setting up API keys](https://support.google.com/googleapi/answer/6158862?hl=en)
 - [Create a search engine](https://support.google.com/programmable-search/answer/11082370?hl=en&ref_topic=4513742&sjid=14720713324191360097-NC)
 - [SignalWire Agents SDK](https://developer.signalwire.com/sdks/agents-sdk/)
 - [SignalWire AI Agent SDK Examples](https://github.com/signalwire/signalwire-agents/blob/main/examples/README.md)
 - [Your AI Agent Deserves More Than a Webhook](https://share.signalwire.com/a-full-ai-framework-for-voice-not-just-a-prompt-playground?ecid=ACsprvtll5GcOXPzhhgJX4T1y7E2wq2hs4tSkUFYZ8irgLpBSA9VgwEOKWPk7pbgzfkh6AC85ADf&utm_campaign=17777493-Agent%20SDK%20Series%20Launch&utm_medium=email&_hsenc=p2ANqtz--JOx3ywMr5DfGFy4eWpFwP8mrVWTnXB-Oip9bF1zaCMxsVsenvvgCCETYn2lgeaI4QFv4D1LHUevZJFM0a8g-uMUEchA&_hsmi=377993165&utm_content=377993165&utm_source=hs_email)
+
 
 
 
