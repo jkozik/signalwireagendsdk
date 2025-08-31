@@ -30,7 +30,8 @@ To run this script, I put it on my home server in a Docker container.  My home n
 
 Here's a picture of my setup.
 
-<img width="1289" height="729" alt="image" src="https://github.com/user-attachments/assets/2e909739-2de3-4ace-aed2-9e2544ed46b8" />
+<img width="1294" height="731" alt="image" src="https://github.com/user-attachments/assets/f5656eff-6888-4099-92d8-d475da7ed87d" />
+
 
 ## dev-agent.py
 On my home server, I setup a project and created the file dev-agent.py
@@ -308,6 +309,7 @@ If the SignalWire provisioning disagrees with these environment variables, a cal
 - [SignalWire Agents SDK](https://developer.signalwire.com/sdks/agents-sdk/)
 - [SignalWire AI Agent SDK Examples](https://github.com/signalwire/signalwire-agents/blob/main/examples/README.md)
 - [Your AI Agent Deserves More Than a Webhook](https://share.signalwire.com/a-full-ai-framework-for-voice-not-just-a-prompt-playground?ecid=ACsprvtll5GcOXPzhhgJX4T1y7E2wq2hs4tSkUFYZ8irgLpBSA9VgwEOKWPk7pbgzfkh6AC85ADf&utm_campaign=17777493-Agent%20SDK%20Series%20Launch&utm_medium=email&_hsenc=p2ANqtz--JOx3ywMr5DfGFy4eWpFwP8mrVWTnXB-Oip9bF1zaCMxsVsenvvgCCETYn2lgeaI4QFv4D1LHUevZJFM0a8g-uMUEchA&_hsmi=377993165&utm_content=377993165&utm_source=hs_email)
+
 
 
 
