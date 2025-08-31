@@ -8,6 +8,8 @@ On the registration table the same Python script was distributed to the conferen
 
 <img width="400" height="600" alt="image" src="https://github.com/user-attachments/assets/754eb3b7-b9a0-4626-96d3-63d292a9b7db" />
 
+In the [SignalWire AI Agent SDK QuickStart](https://developer.signalwire.com/sdks/agents-sdk/quickstart/#create-your-first-agent) they named this short program `dev-agent.py`.  Thus I will use the same name in this repository. 
+
 ## Summary
 For my reference and perhaps the benefit of others, I recorded the steps I followed to get this work.  Here's a summary.  The following sections give lots of details.  
 
@@ -312,6 +314,7 @@ If the SignalWire provisioning disagrees with these environment variables, a cal
 - [SignalWire Agents SDK](https://developer.signalwire.com/sdks/agents-sdk/)
 - [SignalWire AI Agent SDK Examples](https://github.com/signalwire/signalwire-agents/blob/main/examples/README.md)
 - [Your AI Agent Deserves More Than a Webhook](https://share.signalwire.com/a-full-ai-framework-for-voice-not-just-a-prompt-playground?ecid=ACsprvtll5GcOXPzhhgJX4T1y7E2wq2hs4tSkUFYZ8irgLpBSA9VgwEOKWPk7pbgzfkh6AC85ADf&utm_campaign=17777493-Agent%20SDK%20Series%20Launch&utm_medium=email&_hsenc=p2ANqtz--JOx3ywMr5DfGFy4eWpFwP8mrVWTnXB-Oip9bF1zaCMxsVsenvvgCCETYn2lgeaI4QFv4D1LHUevZJFM0a8g-uMUEchA&_hsmi=377993165&utm_content=377993165&utm_source=hs_email)
+
 
 
 
